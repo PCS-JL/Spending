@@ -1,0 +1,1943 @@
+
+                        <!DOCTYPE html>
+                        <html lang="en">
+                        <head>
+                            <meta charset="UTF-8">
+                            <meta name="viewport" content="width=device-width, initial-scale=1.0">
+							<style>
+								body {
+									background-color: white; /* Ensure the iframe has a white background */
+								}
+
+								
+							</style>
+                        </head>
+                        <body>
+                            <!-- generated HTML -->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Project Cost Report - Spending & Forecast</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            padding: 20px;
+            min-height: 100vh;
+        }
+        .container {
+            max-width: 1600px;
+            margin: 0 auto;
+            background: white;
+            border-radius: 20px;
+            box-shadow: 0 20px 60px rgba(0,0,0,0.3);
+            padding: 40px;
+        }
+        .header {
+            text-align: center;
+            margin-bottom: 30px;
+            padding-bottom: 20px;
+            border-bottom: 3px solid #667eea;
+        }
+        .header h1 {
+            color: #2d3748;
+            font-size: 32px;
+            margin-bottom: 10px;
+        }
+        .header .subtitle {
+            color: #718096;
+            font-size: 14px;
+            margin-top: 5px;
+        }
+        .project-info {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 20px;
+            margin-bottom: 30px;
+            background: #f7fafc;
+            padding: 25px;
+            border-radius: 12px;
+            border-left: 5px solid #667eea;
+        }
+        .info-item {
+            display: flex;
+            flex-direction: column;
+        }
+        .info-label {
+            font-size: 12px;
+            color: #718096;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            margin-bottom: 5px;
+        }
+        .info-value {
+            font-size: 16px;
+            color: #2d3748;
+            font-weight: 700;
+        }
+        /* EVM Metrics - Single Row with White Text */
+        .evm-section {
+            display: flex;
+            gap: 15px;
+            margin-bottom: 30px;
+            overflow-x: auto;
+            padding: 5px 0;
+        }
+        .evm-card {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 20px 25px;
+            border-radius: 12px;
+            box-shadow: 0 10px 25px rgba(102, 126, 234, 0.3);
+            transition: transform 0.3s ease;
+            flex: 1;
+            min-width: 180px;
+            text-align: center;
+        }
+        .evm-card:hover {
+            transform: translateY(-5px);
+        }
+        .evm-card.pv {
+            background: linear-gradient(135deg, #4299e1 0%, #3182ce 100%);
+        }
+        .evm-card.ev {
+            background: linear-gradient(135deg, #48bb78 0%, #38a169 100%);
+        }
+        .evm-card.ac {
+            background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);
+        }
+        .evm-card.cpi {
+            background: linear-gradient(135deg, #ecc94b 0%, #d69e2e 100%);
+        }
+        .evm-card.variance {
+            background: linear-gradient(135deg, #48bb78 0%, #38a169 100%);
+        }
+        .evm-label {
+            font-size: 11px;
+            color: white;
+            opacity: 0.95;
+            margin-bottom: 8px;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+        .evm-value {
+            font-size: 26px;
+            font-weight: 700;
+            color: white;
+        }
+        /* Spending Curve Chart */
+        .chart-section {
+            background: #f7fafc;
+            padding: 30px;
+            border-radius: 12px;
+            margin-bottom: 30px;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.05);
+        }
+        .chart-title {
+            font-size: 20px;
+            font-weight: 700;
+            color: #2d3748;
+            margin-bottom: 20px;
+            text-align: center;
+        }
+        .spending-curve {
+            width: 100%;
+            height: 450px;
+            position: relative;
+            background: white;
+            border-radius: 8px;
+            padding: 20px;
+        }
+        .legend-container {
+            display: flex;
+            justify-content: center;
+            gap: 30px;
+            margin-top: 15px;
+            flex-wrap: wrap;
+        }
+        .legend-item-chart {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            font-size: 13px;
+            color: #4a5568;
+        }
+        .legend-line {
+            width: 30px;
+            height: 3px;
+            border-radius: 2px;
+        }
+        .legend-line.solid {
+            background: currentColor;
+        }
+        .legend-line.dashed {
+            background: repeating-linear-gradient(
+                to right,
+                currentColor 0px,
+                currentColor 6px,
+                transparent 6px,
+                transparent 12px
+            );
+        }
+        /* Bar Chart - Stacked with Tooltips */
+        .bar-chart-section {
+            background: #f7fafc;
+            padding: 30px;
+            border-radius: 12px;
+            margin-bottom: 30px;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.05);
+        }
+        
+        /* Filter Section */
+        .filter-section {
+            background: white;
+            padding: 20px;
+            border-radius: 8px;
+            margin-bottom: 25px;
+            box-shadow: 0 2px 6px rgba(0,0,0,0.08);
+        }
+        .filter-title {
+            font-size: 14px;
+            font-weight: 700;
+            color: #4a5568;
+            margin-bottom: 15px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+        .filter-title::before {
+            content: '🔍';
+            font-size: 16px;
+        }
+        .filter-options {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 10px;
+        }
+        .filter-checkbox {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            padding: 8px 16px;
+            border-radius: 20px;
+            background: #edf2f7;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            user-select: none;
+        }
+        .filter-checkbox:hover {
+            background: #e2e8f0;
+            transform: translateY(-2px);
+        }
+        .filter-checkbox input[type="checkbox"] {
+            width: 18px;
+            height: 18px;
+            cursor: pointer;
+            accent-color: #667eea;
+        }
+        .filter-checkbox label {
+            cursor: pointer;
+            font-size: 13px;
+            font-weight: 600;
+            color: #2d3748;
+            display: flex;
+            align-items: center;
+            gap: 6px;
+        }
+        .filter-checkbox.active {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+        }
+        .filter-checkbox.active label {
+            color: white;
+        }
+        .filter-color-indicator {
+            width: 14px;
+            height: 14px;
+            border-radius: 3px;
+            display: inline-block;
+        }
+        .filter-actions {
+            display: flex;
+            gap: 10px;
+            margin-top: 15px;
+        }
+        .filter-btn {
+            padding: 8px 16px;
+            border: none;
+            border-radius: 6px;
+            font-size: 12px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+        .filter-btn.select-all {
+            background: #667eea;
+            color: white;
+        }
+        .filter-btn.select-all:hover {
+            background: #5568d3;
+        }
+        .filter-btn.clear-all {
+            background: #e2e8f0;
+            color: #4a5568;
+        }
+        .filter-btn.clear-all:hover {
+            background: #cbd5e0;
+        }
+        
+        .bar-chart {
+            display: flex;
+            align-items: flex-end;
+            justify-content: space-around;
+            height: 280px;
+            background: white;
+            border-radius: 8px;
+            padding: 20px;
+            gap: 8px;
+        }
+        .bar-wrapper {
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            max-width: 70px;
+            position: relative;
+        }
+        .bar-stacked {
+            width: 100%;
+            display: flex;
+            flex-direction: column-reverse;
+            align-items: center;
+            transition: all 0.3s ease;
+            position: relative;
+            cursor: pointer;
+        }
+        .bar-stacked:hover {
+            transform: translateY(-5px);
+        }
+        .bar-stacked:hover .bar-tooltip {
+            opacity: 1;
+            visibility: visible;
+        }
+        .bar-segment {
+            width: 100%;
+            transition: all 0.3s ease;
+            position: relative;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        .bar-segment:first-child {
+            border-radius: 6px 6px 0 0;
+        }
+        .bar-segment.subcontractor {
+            background: linear-gradient(180deg, #667eea 0%, #5568d3 100%);
+        }
+        .bar-segment.mob-demob {
+            background: linear-gradient(180deg, #f093fb 0%, #d97ce4 100%);
+        }
+        .bar-segment.charter {
+            background: linear-gradient(180deg, #48bb78 0%, #3ba565 100%);
+        }
+        .bar-segment.consumables {
+            background: linear-gradient(180deg, #ed8936 0%, #d67228 100%);
+        }
+        .bar-segment.others {
+            background: linear-gradient(180deg, #ecc94b 0%, #d4b33f 100%);
+        }
+        .bar-segment.hidden {
+            display: none;
+        }
+        .segment-value {
+            color: white;
+            font-size: 9px;
+            font-weight: 700;
+            text-shadow: 0 1px 2px rgba(0,0,0,0.3);
+        }
+        .bar-total-label {
+            position: absolute;
+            top: -25px;
+            left: 50%;
+            transform: translateX(-50%);
+            font-size: 10px;
+            font-weight: 700;
+            color: #2d3748;
+            white-space: nowrap;
+        }
+        .bar-month-label {
+            margin-top: 8px;
+            font-size: 10px;
+            color: #4a5568;
+            font-weight: 600;
+            white-space: nowrap;
+        }
+        .bar-tooltip {
+            position: absolute;
+            bottom: 110%;
+            left: 50%;
+            transform: translateX(-50%);
+            background: rgba(45, 55, 72, 0.95);
+            color: white;
+            padding: 10px;
+            border-radius: 6px;
+            font-size: 11px;
+            white-space: nowrap;
+            opacity: 0;
+            visibility: hidden;
+            transition: all 0.3s ease;
+            z-index: 10;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.3);
+        }
+        .bar-tooltip::after {
+            content: '';
+            position: absolute;
+            top: 100%;
+            left: 50%;
+            transform: translateX(-50%);
+            border: 6px solid transparent;
+            border-top-color: rgba(45, 55, 72, 0.95);
+        }
+        .tooltip-row {
+            display: flex;
+            justify-content: space-between;
+            gap: 15px;
+            margin: 3px 0;
+        }
+        .tooltip-row.hidden {
+            display: none;
+        }
+        .tooltip-label {
+            display: flex;
+            align-items: center;
+            gap: 5px;
+        }
+        .tooltip-color {
+            width: 10px;
+            height: 10px;
+            border-radius: 2px;
+        }
+        .bar-legend {
+            display: flex;
+            justify-content: center;
+            gap: 20px;
+            margin-top: 20px;
+            flex-wrap: wrap;
+        }
+        .bar-legend-item {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            font-size: 12px;
+            color: #4a5568;
+        }
+        .bar-legend-color {
+            width: 20px;
+            height: 12px;
+            border-radius: 3px;
+        }
+        /* Forecast Grid */
+        .forecast-grid {
+            background: #f7fafc;
+            padding: 30px;
+            border-radius: 12px;
+            margin-bottom: 30px;
+        }
+        .grid-title {
+            font-size: 18px;
+            font-weight: 700;
+            color: #2d3748;
+            margin-bottom: 20px;
+            display: flex;
+            align-items: center;
+        }
+        .grid-title::before {
+            content: '';
+            width: 4px;
+            height: 24px;
+            background: #667eea;
+            margin-right: 12px;
+            border-radius: 2px;
+        }
+        .table-container {
+            overflow-x: auto;
+            background: white;
+            border-radius: 8px;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.05);
+        }
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            font-size: 12px;
+        }
+        th {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 10px 8px;
+            text-align: left;
+            font-weight: 600;
+            font-size: 10px;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            white-space: nowrap;
+        }
+        td {
+            padding: 10px 8px;
+            border-bottom: 1px solid #e2e8f0;
+            color: #2d3748;
+            white-space: nowrap;
+        }
+        tr:hover {
+            background: #f7fafc;
+        }
+        .highlight-row {
+            background: #edf2f7;
+            font-weight: 700;
+        }
+        .amount {
+            font-weight: 600;
+            text-align: right;
+        }
+        .positive {
+            color: #38a169;
+        }
+        .negative {
+            color: #e53e3e;
+        }
+        .month-col {
+            text-align: center;
+            font-size: 11px;
+        }
+        /* Summary Cards */
+        .summary-section {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 25px;
+            margin-top: 30px;
+        }
+        .summary-card {
+            background: linear-gradient(135deg, #f7fafc 0%, #edf2f7 100%);
+            border: none;
+            border-radius: 16px;
+            padding: 25px;
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.08);
+            position: relative;
+            overflow: hidden;
+        }
+        .summary-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 4px;
+            background: linear-gradient(90deg, #667eea 0%, #764ba2 100%);
+        }
+        .summary-card:hover {
+            transform: translateY(-8px);
+            box-shadow: 0 12px 24px rgba(102, 126, 234, 0.2);
+        }
+        .summary-card.revenue::before {
+            background: linear-gradient(90deg, #48bb78 0%, #38a169 100%);
+        }
+        .summary-card.expense::before {
+            background: linear-gradient(90deg, #f093fb 0%, #f5576c 100%);
+        }
+        .summary-card.warning::before {
+            background: linear-gradient(90deg, #ed8936 0%, #dd6b20 100%);
+        }
+        .summary-card h3 {
+            font-size: 13px;
+            color: #667eea;
+            margin-bottom: 12px;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            font-weight: 700;
+        }
+        .summary-value {
+            font-size: 32px;
+            font-weight: 700;
+            color: #667eea;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+        .summary-icon {
+            font-size: 24px;
+        }
+        .view-toggle {
+            display: flex;
+            gap: 10px;
+            background: #edf2f7;
+            padding: 5px;
+            border-radius: 8px;
+            margin-bottom: 20px;
+            justify-content: center;
+        }
+        .view-btn {
+            padding: 10px 20px;
+            border: none;
+            background: transparent;
+            color: #4a5568;
+            font-size: 14px;
+            font-weight: 600;
+            cursor: pointer;
+            border-radius: 6px;
+            transition: all 0.3s ease;
+        }
+        .view-btn.active {
+            background: white;
+            color: #667eea;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+        }
+        .view-btn:hover {
+            background: #fff;
+        }
+        .content-view {
+            display: none;
+        }
+        .content-view.active {
+            display: block;
+        }
+        @media (max-width: 1200px) {
+            .evm-section {
+                flex-wrap: nowrap;
+                overflow-x: auto;
+                -webkit-overflow-scrolling: touch;
+            }
+            .evm-card {
+                flex-shrink: 0;
+            }
+        }
+        @media (max-width: 1024px) {
+            .summary-section {
+                grid-template-columns: repeat(2, 1fr);
+            }
+        }
+        @media (max-width: 768px) {
+            .container {
+                padding: 20px;
+            }
+            .project-info,
+            .summary-section {
+                grid-template-columns: 1fr;
+            }
+            .header h1 {
+                font-size: 24px;
+            }
+            .bar-chart {
+                flex-wrap: wrap;
+                height: auto;
+            }
+            .evm-card {
+                min-width: 150px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>📊 Project Cost Report</h1>
+            <p class="subtitle">Spending & Forecast Page - Track cash flow and plan ahead</p>
+        </div>
+        <div class="project-info">
+            <div class="info-item">
+                <span class="info-label">Project Number</span>
+                <span class="info-value">MSS/25001</span>
+            </div>
+            <div class="info-item">
+                <span class="info-label">Project Name</span>
+                <span class="info-value">Cost Management System</span>
+            </div>
+            <div class="info-item">
+                <span class="info-label">Project Manager</span>
+                <span class="info-value">Dickson</span>
+            </div>
+            <div class="info-item">
+                <span class="info-label">Client</span>
+                <span class="info-value">Mermaid</span>
+            </div>
+            <div class="info-item">
+                <span class="info-label">Project Type</span>
+                <span class="info-value">EPCI</span>
+            </div>
+            <div class="info-item">
+                <span class="info-label">Reporting Period</span>
+                <span class="info-value">30-Dec-25</span>
+            </div>
+        </div>
+        <!-- EVM Metrics -->
+        <div class="evm-section">
+            <div class="evm-card pv">
+                <div class="evm-label">PV (Planned Value)</div>
+                <div class="evm-value">$XXX</div>
+            </div>
+            <div class="evm-card ev">
+                <div class="evm-label">EV (Earned Value)</div>
+                <div class="evm-value">$XXX</div>
+            </div>
+            <div class="evm-card ac">
+                <div class="evm-label">AC (Actual Cost)</div>
+                <div class="evm-value">$XXX</div>
+            </div>
+            <div class="evm-card cpi">
+                <div class="evm-label">CPI (Cost Performance)</div>
+                <div class="evm-value">1.XX</div>
+            </div>
+            <div class="evm-card variance">
+                <div class="evm-label">EAC Variance</div>
+                <div class="evm-value">$20,000</div>
+            </div>
+        </div>
+        <div class="view-toggle">
+            <button class="view-btn active" onclick="switchView('overview')">📈 Overview</button>
+            <button class="view-btn" onclick="switchView('expenses')">💰 Expenses Detail</button>
+            <button class="view-btn" onclick="switchView('revenue')">💵 Revenue Detail</button>
+        </div>
+        <!-- Overview View -->
+        <div class="content-view active" id="overviewView">
+            <!-- Spending Curve - 3 Lines (Revenue & Expenses) -->
+            <div class="chart-section">
+                <div class="chart-title">📈 Spending Curve Analysis</div>
+                <div class="spending-curve">
+                    <svg width="100%" height="100%" viewBox="0 0 1000 380">
+                        <!-- Grid lines -->
+                        <line x1="50" y1="320" x2="950" y2="320" stroke="#e2e8f0" stroke-width="2"/>
+                        <line x1="50" y1="270" x2="950" y2="270" stroke="#e2e8f0" stroke-width="1" stroke-dasharray="5,5"/>
+                        <line x1="50" y1="220" x2="950" y2="220" stroke="#e2e8f0" stroke-width="1" stroke-dasharray="5,5"/>
+                        <line x1="50" y1="170" x2="950" y2="170" stroke="#e2e8f0" stroke-width="1" stroke-dasharray="5,5"/>
+                        <line x1="50" y1="120" x2="950" y2="120" stroke="#e2e8f0" stroke-width="1" stroke-dasharray="5,5"/>
+                        <line x1="50" y1="70" x2="950" y2="70" stroke="#e2e8f0" stroke-width="1" stroke-dasharray="5,5"/>
+                        <line x1="50" y1="20" x2="950" y2="20" stroke="#e2e8f0" stroke-width="1" stroke-dasharray="5,5"/>
+                        <!-- Vertical line at April (cutoff point) -->
+                        <line x1="320" y1="20" x2="320" y2="320" stroke="#cbd5e0" stroke-width="2" stroke-dasharray="5,5"/>
+                        <rect x="295" y="5" width="50" height="18" fill="#fed7d7" rx="4"/>
+                        <text x="320" y="17" font-size="10" font-weight="700" fill="#c53030" text-anchor="middle">Current</text>
+                        <!-- Y-axis labels -->
+                        <text x="30" y="325" font-size="11" fill="#718096">$0</text>
+                        <text x="15" y="275" font-size="11" fill="#718096">$50K</text>
+                        <text x="15" y="225" font-size="11" fill="#718096">$100K</text>
+                        <text x="15" y="175" font-size="11" fill="#718096">$150K</text>
+                        <text x="15" y="125" font-size="11" fill="#718096">$200K</text>
+                        <text x="15" y="75" font-size="11" fill="#718096">$250K</text>
+                        <text x="15" y="25" font-size="11" fill="#718096">$300K</text>
+                        <!-- REVENUE LINES (Blue) -->
+                        <!-- 1. Plan Revenue (Blue Solid - Jan to Mar only) -->
+                        <path d="M 50 310 L 140 285 L 230 255 L 320 220"
+                              stroke="#4299e1" stroke-width="3.5" fill="none"/>
+                        <!-- 2. Forecast Revenue (Blue Dashed - Apr to Dec, continues from Plan) -->
+                        <path d="M 320 220 L 410 185 L 500 155 L 590 125 L 680 95 L 770 70 L 860 50 L 950 35"
+                              stroke="#4299e1" stroke-width="3.5" fill="none" stroke-dasharray="10,5"/>
+                        <!-- EXPENSES LINES (Red) -->
+                        <!-- 3. Actual Expenses (Red Solid - Jan to Mar only) -->
+                        <path d="M 50 315 L 140 300 L 230 280 L 320 265"
+                              stroke="#f56565" stroke-width="3.5" fill="none"/>
+                        <!-- 4. Forecast Expenses (Red Dashed - Apr to Dec) -->
+                        <path d="M 320 265 L 410 240 L 500 215 L 590 190 L 680 165 L 770 140 L 860 115 L 950 95"
+                              stroke="#f56565" stroke-width="3.5" fill="none" stroke-dasharray="10,5"/>
+                        <!-- Data points at April cutoff -->
+                        <circle cx="320" cy="220" r="6" fill="#4299e1" stroke="white" stroke-width="2.5"/>
+                        <circle cx="320" cy="265" r="6" fill="#f56565" stroke="white" stroke-width="2.5"/>
+                        <!-- Labels at key points -->
+                        <text x="50" y="300" font-size="11" font-weight="700" fill="#4299e1">$0</text>
+                        <text x="320" y="210" font-size="11" font-weight="700" fill="#4299e1">$100K</text>
+                        <text x="950" y="25" font-size="11" font-weight="700" fill="#4299e1">$300K</text>
+                        <text x="50" y="335" font-size="11" font-weight="700" fill="#f56565">$0</text>
+                        <text x="320" y="285" font-size="11" font-weight="700" fill="#f56565">$50K</text>
+                        <text x="950" y="110" font-size="11" font-weight="700" fill="#f56565">$250K</text>
+                        <!-- X-axis labels -->
+                        <text x="40" y="350" font-size="11" fill="#718096" font-weight="600">Jan</text>
+                        <text x="130" y="350" font-size="11" fill="#718096" font-weight="600">Feb</text>
+                        <text x="220" y="350" font-size="11" fill="#718096" font-weight="600">Mar</text>
+                        <text x="302" y="350" font-size="11" fill="#e53e3e" font-weight="700">Apr</text>
+                        <text x="400" y="350" font-size="11" fill="#718096">May</text>
+                        <text x="490" y="350" font-size="11" fill="#718096">Jun</text>
+                        <text x="580" y="350" font-size="11" fill="#718096">Jul</text>
+                        <text x="670" y="350" font-size="11" fill="#718096">Aug</text>
+                        <text x="760" y="350" font-size="11" fill="#718096">Sep</text>
+                        <text x="850" y="350" font-size="11" fill="#718096">Oct</text>
+                        <text x="925" y="350" font-size="11" fill="#718096">Dec</text>
+                    </svg>
+                </div>
+                <div class="legend-container">
+                    <div class="legend-item-chart">
+                        <div class="legend-line solid" style="color: #4299e1;"></div>
+                        <span><strong>Plan Revenue</strong> (Jan-Mar)</span>
+                    </div>
+                    <div class="legend-item-chart">
+                        <div class="legend-line dashed" style="color: #4299e1;"></div>
+                        <span><strong>Forecast Revenue</strong> (Apr-Dec)</span>
+                    </div>
+                    <div class="legend-item-chart">
+                        <div class="legend-line solid" style="color: #f56565;"></div>
+                        <span><strong>Actual Expenses</strong> (Jan-Mar)</span>
+                    </div>
+                    <div class="legend-item-chart">
+                        <div class="legend-line dashed" style="color: #f56565;"></div>
+                        <span><strong>Forecast Expenses</strong> (Apr-Dec)</span>
+                    </div>
+                </div>
+            </div>
+            <!-- Bar Chart - Stacked with Values and Tooltips -->
+            <div class="bar-chart-section">
+                <div class="chart-title">📊 Spending Plan by Accounting Code (Stacked)</div>
+                
+                <!-- Filter Section -->
+                <div class="filter-section">
+                    <div class="filter-title">Filter Accounting Codes</div>
+                    <div class="filter-options">
+                        <div class="filter-checkbox active" data-category="subcontractor">
+                            <input type="checkbox" id="filter-subcontractor" checked onchange="toggleFilter('subcontractor')">
+                            <label for="filter-subcontractor">
+                                <span class="filter-color-indicator" style="background: linear-gradient(135deg, #667eea 0%, #5568d3 100%);"></span>
+                                Subcontractor
+                            </label>
+                        </div>
+                        <div class="filter-checkbox active" data-category="mob-demob">
+                            <input type="checkbox" id="filter-mob-demob" checked onchange="toggleFilter('mob-demob')">
+                            <label for="filter-mob-demob">
+                                <span class="filter-color-indicator" style="background: linear-gradient(135deg, #f093fb 0%, #d97ce4 100%);"></span>
+                                Mob/Demob
+                            </label>
+                        </div>
+                        <div class="filter-checkbox active" data-category="charter">
+                            <input type="checkbox" id="filter-charter" checked onchange="toggleFilter('charter')">
+                            <label for="filter-charter">
+                                <span class="filter-color-indicator" style="background: linear-gradient(135deg, #48bb78 0%, #3ba565 100%);"></span>
+                                Charter Hire
+                            </label>
+                        </div>
+                        <div class="filter-checkbox active" data-category="consumables">
+                            <input type="checkbox" id="filter-consumables" checked onchange="toggleFilter('consumables')">
+                            <label for="filter-consumables">
+                                <span class="filter-color-indicator" style="background: linear-gradient(135deg, #ed8936 0%, #d67228 100%);"></span>
+                                Consumables
+                            </label>
+                        </div>
+                        <div class="filter-checkbox active" data-category="others">
+                            <input type="checkbox" id="filter-others" checked onchange="toggleFilter('others')">
+                            <label for="filter-others">
+                                <span class="filter-color-indicator" style="background: linear-gradient(135deg, #ecc94b 0%, #d4b33f 100%);"></span>
+                                Others
+                            </label>
+                        </div>
+                    </div>
+                    <div class="filter-actions">
+                        <button class="filter-btn select-all" onclick="selectAllFilters()">✓ Select All</button>
+                        <button class="filter-btn clear-all" onclick="clearAllFilters()">✕ Clear All</button>
+                    </div>
+                </div>
+                
+                <div class="bar-chart" id="barChart">
+                    <!-- January -->
+                    <div class="bar-wrapper">
+                        <div class="bar-stacked" style="height: 70%;" data-month="jan">
+                            <div class="bar-total-label">$28K</div>
+                            <div class="bar-tooltip">
+                                <div class="tooltip-row" data-category="subcontractor">
+                                    <div class="tooltip-label">
+                                        <div class="tooltip-color" style="background: #667eea;"></div>
+                                        <span>Subcontractor</span>
+                                    </div>
+                                    <span>$8.0K</span>
+                                </div>
+                                <div class="tooltip-row" data-category="mob-demob">
+                                    <div class="tooltip-label">
+                                        <div class="tooltip-color" style="background: #f093fb;"></div>
+                                        <span>Mob/Demob</span>
+                                    </div>
+                                    <span>$9.0K</span>
+                                </div>
+                                <div class="tooltip-row" data-category="charter">
+                                    <div class="tooltip-label">
+                                        <div class="tooltip-color" style="background: #48bb78;"></div>
+                                        <span>Charter</span>
+                                    </div>
+                                    <span>$4.0K</span>
+                                </div>
+                                <div class="tooltip-row" data-category="consumables">
+                                    <div class="tooltip-label">
+                                        <div class="tooltip-color" style="background: #ed8936;"></div>
+                                        <span>Consumables</span>
+                                    </div>
+                                    <span>$4.0K</span>
+                                </div>
+                                <div class="tooltip-row" data-category="others">
+                                    <div class="tooltip-label">
+                                        <div class="tooltip-color" style="background: #ecc94b;"></div>
+                                        <span>Others</span>
+                                    </div>
+                                    <span>$3.0K</span>
+                                </div>
+                            </div>
+                            <div class="bar-segment subcontractor" style="height: 28%;" data-category="subcontractor"><span class="segment-value">$8K</span></div>
+                            <div class="bar-segment mob-demob" style="height: 32%;" data-category="mob-demob"><span class="segment-value">$9K</span></div>
+                            <div class="bar-segment charter" style="height: 14%;" data-category="charter"><span class="segment-value">$4K</span></div>
+                            <div class="bar-segment consumables" style="height: 14%;" data-category="consumables"><span class="segment-value">$4K</span></div>
+                            <div class="bar-segment others" style="height: 12%;" data-category="others"><span class="segment-value">$3K</span></div>
+                        </div>
+                        <div class="bar-month-label">Jan 26</div>
+                    </div>
+                    <!-- February -->
+                    <div class="bar-wrapper">
+                        <div class="bar-stacked" style="height: 68%;" data-month="feb">
+                            <div class="bar-total-label">$28K</div>
+                            <div class="bar-tooltip">
+                                <div class="tooltip-row" data-category="subcontractor">
+                                    <div class="tooltip-label">
+                                        <div class="tooltip-color" style="background: #667eea;"></div>
+                                        <span>Subcontractor</span>
+                                    </div>
+                                    <span>$8.1K</span>
+                                </div>
+                                <div class="tooltip-row" data-category="mob-demob">
+                                    <div class="tooltip-label">
+                                        <div class="tooltip-color" style="background: #f093fb;"></div>
+                                        <span>Mob/Demob</span>
+                                    </div>
+                                    <span>$9.0K</span>
+                                </div>
+                                <div class="tooltip-row" data-category="charter">
+                                    <div class="tooltip-label">
+                                        <div class="tooltip-color" style="background: #48bb78;"></div>
+                                        <span>Charter</span>
+                                    </div>
+                                    <span>$3.9K</span>
+                                </div>
+                                <div class="tooltip-row" data-category="consumables">
+                                    <div class="tooltip-label">
+                                        <div class="tooltip-color" style="background: #ed8936;"></div>
+                                        <span>Consumables</span>
+                                    </div>
+                                    <span>$4.0K</span>
+                                </div>
+                                <div class="tooltip-row" data-category="others">
+                                    <div class="tooltip-label">
+                                        <div class="tooltip-color" style="background: #ecc94b;"></div>
+                                        <span>Others</span>
+                                    </div>
+                                    <span>$3.0K</span>
+                                </div>
+                            </div>
+                            <div class="bar-segment subcontractor" style="height: 29%;" data-category="subcontractor"><span class="segment-value">$8K</span></div>
+                            <div class="bar-segment mob-demob" style="height: 32%;" data-category="mob-demob"><span class="segment-value">$9K</span></div>
+                            <div class="bar-segment charter" style="height: 14%;" data-category="charter"><span class="segment-value">$4K</span></div>
+                            <div class="bar-segment consumables" style="height: 14%;" data-category="consumables"><span class="segment-value">$4K</span></div>
+                            <div class="bar-segment others" style="height: 11%;" data-category="others"><span class="segment-value">$3K</span></div>
+                        </div>
+                        <div class="bar-month-label">Feb 26</div>
+                    </div>
+                    <!-- March -->
+                    <div class="bar-wrapper">
+                        <div class="bar-stacked" style="height: 72%;" data-month="mar">
+                            <div class="bar-total-label">$29K</div>
+                            <div class="bar-tooltip">
+                                <div class="tooltip-row" data-category="subcontractor">
+                                    <div class="tooltip-label">
+                                        <div class="tooltip-color" style="background: #667eea;"></div>
+                                        <span>Subcontractor</span>
+                                    </div>
+                                    <span>$8.1K</span>
+                                </div>
+                                <div class="tooltip-row" data-category="mob-demob">
+                                    <div class="tooltip-label">
+                                        <div class="tooltip-color" style="background: #f093fb;"></div>
+                                        <span>Mob/Demob</span>
+                                    </div>
+                                    <span>$9.9K</span>
+                                </div>
+                                <div class="tooltip-row" data-category="charter">
+                                    <div class="tooltip-label">
+                                        <div class="tooltip-color" style="background: #48bb78;"></div>
+                                        <span>Charter</span>
+                                    </div>
+                                    <span>$4.1K</span>
+                                </div>
+                                <div class="tooltip-row" data-category="consumables">
+                                    <div class="tooltip-label">
+                                        <div class="tooltip-color" style="background: #ed8936;"></div>
+                                        <span>Consumables</span>
+                                    </div>
+                                    <span>$4.0K</span>
+                                </div>
+                                <div class="tooltip-row" data-category="others">
+                                    <div class="tooltip-label">
+                                        <div class="tooltip-color" style="background: #ecc94b;"></div>
+                                        <span>Others</span>
+                                    </div>
+                                    <span>$2.9K</span>
+                                </div>
+                            </div>
+                            <div class="bar-segment subcontractor" style="height: 28%;" data-category="subcontractor"><span class="segment-value">$8K</span></div>
+                            <div class="bar-segment mob-demob" style="height: 34%;" data-category="mob-demob"><span class="segment-value">$10K</span></div>
+                            <div class="bar-segment charter" style="height: 14%;" data-category="charter"><span class="segment-value">$4K</span></div>
+                            <div class="bar-segment consumables" style="height: 14%;" data-category="consumables"><span class="segment-value">$4K</span></div>
+                            <div class="bar-segment others" style="height: 10%;" data-category="others"><span class="segment-value">$3K</span></div>
+                        </div>
+                        <div class="bar-month-label">Mar 26</div>
+                    </div>
+                    <!-- April -->
+                    <div class="bar-wrapper">
+                        <div class="bar-stacked" style="height: 69%;" data-month="apr">
+                            <div class="bar-total-label">$28K</div>
+                            <div class="bar-tooltip">
+                                <div class="tooltip-row" data-category="subcontractor">
+                                    <div class="tooltip-label">
+                                        <div class="tooltip-color" style="background: #667eea;"></div>
+                                        <span>Subcontractor</span>
+                                    </div>
+                                    <span>$9.0K</span>
+                                </div>
+                                <div class="tooltip-row" data-category="mob-demob">
+                                    <div class="tooltip-label">
+                                        <div class="tooltip-color" style="background: #f093fb;"></div>
+                                        <span>Mob/Demob</span>
+                                    </div>
+                                    <span>$9.0K</span>
+                                </div>
+                                <div class="tooltip-row" data-category="charter">
+                                    <div class="tooltip-label">
+                                        <div class="tooltip-color" style="background: #48bb78;"></div>
+                                        <span>Charter</span>
+                                    </div>
+                                    <span>$3.9K</span>
+                                </div>
+                                <div class="tooltip-row" data-category="consumables">
+                                    <div class="tooltip-label">
+                                        <div class="tooltip-color" style="background: #ed8936;"></div>
+                                        <span>Consumables</span>
+                                    </div>
+                                    <span>$4.0K</span>
+                                </div>
+                                <div class="tooltip-row" data-category="others">
+                                    <div class="tooltip-label">
+                                        <div class="tooltip-color" style="background: #ecc94b;"></div>
+                                        <span>Others</span>
+                                    </div>
+                                    <span>$2.1K</span>
+                                </div>
+                            </div>
+                            <div class="bar-segment subcontractor" style="height: 32%;" data-category="subcontractor"><span class="segment-value">$9K</span></div>
+                            <div class="bar-segment mob-demob" style="height: 32%;" data-category="mob-demob"><span class="segment-value">$9K</span></div>
+                            <div class="bar-segment charter" style="height: 14%;" data-category="charter"><span class="segment-value">$4K</span></div>
+                            <div class="bar-segment consumables" style="height: 14%;" data-category="consumables"><span class="segment-value">$4K</span></div>
+                            <div class="bar-segment others" style="height: 8%;" data-category="others"><span class="segment-value">$2K</span></div>
+                        </div>
+                        <div class="bar-month-label">Apr 26</div>
+                    </div>
+                    <!-- May -->
+                    <div class="bar-wrapper">
+                        <div class="bar-stacked" style="height: 68%;" data-month="may">
+                            <div class="bar-total-label">$28K</div>
+                            <div class="bar-tooltip">
+                                <div class="tooltip-row" data-category="subcontractor">
+                                    <div class="tooltip-label">
+                                        <div class="tooltip-color" style="background: #667eea;"></div>
+                                        <span>Subcontractor</span>
+                                    </div>
+                                    <span>$8.1K</span>
+                                </div>
+                                <div class="tooltip-row" data-category="mob-demob">
+                                    <div class="tooltip-label">
+                                        <div class="tooltip-color" style="background: #f093fb;"></div>
+                                        <span>Mob/Demob</span>
+                                    </div>
+                                    <span>$9.0K</span>
+                                </div>
+                                <div class="tooltip-row" data-category="charter">
+                                    <div class="tooltip-label">
+                                        <div class="tooltip-color" style="background: #48bb78;"></div>
+                                        <span>Charter</span>
+                                    </div>
+                                    <span>$3.9K</span>
+                                </div>
+                                <div class="tooltip-row" data-category="consumables">
+                                    <div class="tooltip-label">
+                                        <div class="tooltip-color" style="background: #ed8936;"></div>
+                                        <span>Consumables</span>
+                                    </div>
+                                    <span>$4.0K</span>
+                                </div>
+                                <div class="tooltip-row" data-category="others">
+                                    <div class="tooltip-label">
+                                        <div class="tooltip-color" style="background: #ecc94b;"></div>
+                                        <span>Others</span>
+                                    </div>
+                                    <span>$3.0K</span>
+                                </div>
+                            </div>
+                            <div class="bar-segment subcontractor" style="height: 29%;" data-category="subcontractor"><span class="segment-value">$8K</span></div>
+                            <div class="bar-segment mob-demob" style="height: 32%;" data-category="mob-demob"><span class="segment-value">$9K</span></div>
+                            <div class="bar-segment charter" style="height: 14%;" data-category="charter"><span class="segment-value">$4K</span></div>
+                            <div class="bar-segment consumables" style="height: 14%;" data-category="consumables"><span class="segment-value">$4K</span></div>
+                            <div class="bar-segment others" style="height: 11%;" data-category="others"><span class="segment-value">$3K</span></div>
+                        </div>
+                        <div class="bar-month-label">May 26</div>
+                    </div>
+                    <!-- June -->
+                    <div class="bar-wrapper">
+                        <div class="bar-stacked" style="height: 74%;" data-month="jun">
+                            <div class="bar-total-label">$30K</div>
+                            <div class="bar-tooltip">
+                                <div class="tooltip-row" data-category="subcontractor">
+                                    <div class="tooltip-label">
+                                        <div class="tooltip-color" style="background: #667eea;"></div>
+                                        <span>Subcontractor</span>
+                                    </div>
+                                    <span>$9.0K</span>
+                                </div>
+                                <div class="tooltip-row" data-category="mob-demob">
+                                    <div class="tooltip-label">
+                                        <div class="tooltip-color" style="background: #f093fb;"></div>
+                                        <span>Mob/Demob</span>
+                                    </div>
+                                    <span>$9.9K</span>
+                                </div>
+                                <div class="tooltip-row" data-category="charter">
+                                    <div class="tooltip-label">
+                                        <div class="tooltip-color" style="background: #48bb78;"></div>
+                                        <span>Charter</span>
+                                    </div>
+                                    <span>$5.1K</span>
+                                </div>
+                                <div class="tooltip-row" data-category="consumables">
+                                    <div class="tooltip-label">
+                                        <div class="tooltip-color" style="background: #ed8936;"></div>
+                                        <span>Consumables</span>
+                                    </div>
+                                    <span>$5.0K</span>
+                                </div>
+                                <div class="tooltip-row" data-category="others">
+                                    <div class="tooltip-label">
+                                        <div class="tooltip-color" style="background: #ecc94b;"></div>
+                                        <span>Others</span>
+                                    </div>
+                                    <span>$1.0K</span>
+                                </div>
+                            </div>
+                            <div class="bar-segment subcontractor" style="height: 30%;" data-category="subcontractor"><span class="segment-value">$9K</span></div>
+                            <div class="bar-segment mob-demob" style="height: 33%;" data-category="mob-demob"><span class="segment-value">$10K</span></div>
+                            <div class="bar-segment charter" style="height: 17%;" data-category="charter"><span class="segment-value">$5K</span></div>
+                            <div class="bar-segment consumables" style="height: 17%;" data-category="consumables"><span class="segment-value">$5K</span></div>
+                            <div class="bar-segment others" style="height: 3%;" data-category="others"><span class="segment-value">$1K</span></div>
+                        </div>
+                        <div class="bar-month-label">Jun 26</div>
+                    </div>
+                    <!-- July -->
+                    <div class="bar-wrapper">
+                        <div class="bar-stacked" style="height: 70%;" data-month="jul">
+                            <div class="bar-total-label">$28K</div>
+                            <div class="bar-tooltip">
+                                <div class="tooltip-row" data-category="subcontractor">
+                                    <div class="tooltip-label">
+                                        <div class="tooltip-color" style="background: #667eea;"></div>
+                                        <span>Subcontractor</span>
+                                    </div>
+                                    <span>$8.1K</span>
+                                </div>
+                                <div class="tooltip-row" data-category="mob-demob">
+                                    <div class="tooltip-label">
+                                        <div class="tooltip-color" style="background: #f093fb;"></div>
+                                        <span>Mob/Demob</span>
+                                    </div>
+                                    <span>$9.0K</span>
+                                </div>
+                                <div class="tooltip-row" data-category="charter">
+                                    <div class="tooltip-label">
+                                        <div class="tooltip-color" style="background: #48bb78;"></div>
+                                        <span>Charter</span>
+                                    </div>
+                                    <span>$3.9K</span>
+                                </div>
+                                <div class="tooltip-row" data-category="consumables">
+                                    <div class="tooltip-label">
+                                        <div class="tooltip-color" style="background: #ed8936;"></div>
+                                        <span>Consumables</span>
+                                    </div>
+                                    <span>$4.0K</span>
+                                </div>
+                                <div class="tooltip-row" data-category="others">
+                                    <div class="tooltip-label">
+                                        <div class="tooltip-color" style="background: #ecc94b;"></div>
+                                        <span>Others</span>
+                                    </div>
+                                    <span>$3.0K</span>
+                                </div>
+                            </div>
+                            <div class="bar-segment subcontractor" style="height: 29%;" data-category="subcontractor"><span class="segment-value">$8K</span></div>
+                            <div class="bar-segment mob-demob" style="height: 32%;" data-category="mob-demob"><span class="segment-value">$9K</span></div>
+                            <div class="bar-segment charter" style="height: 14%;" data-category="charter"><span class="segment-value">$4K</span></div>
+                            <div class="bar-segment consumables" style="height: 14%;" data-category="consumables"><span class="segment-value">$4K</span></div>
+                            <div class="bar-segment others" style="height: 11%;" data-category="others"><span class="segment-value">$3K</span></div>
+                        </div>
+                        <div class="bar-month-label">Jul 26</div>
+                    </div>
+                    <!-- August -->
+                    <div class="bar-wrapper">
+                        <div class="bar-stacked" style="height: 69%;" data-month="aug">
+                            <div class="bar-total-label">$28K</div>
+                            <div class="bar-tooltip">
+                                <div class="tooltip-row" data-category="subcontractor">
+                                    <div class="tooltip-label">
+                                        <div class="tooltip-color" style="background: #667eea;"></div>
+                                        <span>Subcontractor</span>
+                                    </div>
+                                    <span>$8.1K</span>
+                                </div>
+                                <div class="tooltip-row" data-category="mob-demob">
+                                    <div class="tooltip-label">
+                                        <div class="tooltip-color" style="background: #f093fb;"></div>
+                                        <span>Mob/Demob</span>
+                                    </div>
+                                    <span>$9.0K</span>
+                                </div>
+                                <div class="tooltip-row" data-category="charter">
+                                    <div class="tooltip-label">
+                                        <div class="tooltip-color" style="background: #48bb78;"></div>
+                                        <span>Charter</span>
+                                    </div>
+                                    <span>$3.9K</span>
+                                </div>
+                                <div class="tooltip-row" data-category="consumables">
+                                    <div class="tooltip-label">
+                                        <div class="tooltip-color" style="background: #ed8936;"></div>
+                                        <span>Consumables</span>
+                                    </div>
+                                    <span>$4.0K</span>
+                                </div>
+                                <div class="tooltip-row" data-category="others">
+                                    <div class="tooltip-label">
+                                        <div class="tooltip-color" style="background: #ecc94b;"></div>
+                                        <span>Others</span>
+                                    </div>
+                                    <span>$3.0K</span>
+                                </div>
+                            </div>
+                            <div class="bar-segment subcontractor" style="height: 29%;" data-category="subcontractor"><span class="segment-value">$8K</span></div>
+                            <div class="bar-segment mob-demob" style="height: 32%;" data-category="mob-demob"><span class="segment-value">$9K</span></div>
+                            <div class="bar-segment charter" style="height: 14%;" data-category="charter"><span class="segment-value">$4K</span></div>
+                            <div class="bar-segment consumables" style="height: 14%;" data-category="consumables"><span class="segment-value">$4K</span></div>
+                            <div class="bar-segment others" style="height: 11%;" data-category="others"><span class="segment-value">$3K</span></div>
+                        </div>
+                        <div class="bar-month-label">Aug 26</div>
+                    </div>
+                    <!-- September -->
+                    <div class="bar-wrapper">
+                        <div class="bar-stacked" style="height: 68%;" data-month="sep">
+                            <div class="bar-total-label">$28K</div>
+                            <div class="bar-tooltip">
+                                <div class="tooltip-row" data-category="subcontractor">
+                                    <div class="tooltip-label">
+                                        <div class="tooltip-color" style="background: #667eea;"></div>
+                                        <span>Subcontractor</span>
+                                    </div>
+                                    <span>$9.0K</span>
+                                </div>
+                                <div class="tooltip-row" data-category="mob-demob">
+                                    <div class="tooltip-label">
+                                        <div class="tooltip-color" style="background: #f093fb;"></div>
+                                        <span>Mob/Demob</span>
+                                    </div>
+                                    <span>$9.0K</span>
+                                </div>
+                                <div class="tooltip-row" data-category="charter">
+                                    <div class="tooltip-label">
+                                        <div class="tooltip-color" style="background: #48bb78;"></div>
+                                        <span>Charter</span>
+                                    </div>
+                                    <span>$3.9K</span>
+                                </div>
+                                <div class="tooltip-row" data-category="consumables">
+                                    <div class="tooltip-label">
+                                        <div class="tooltip-color" style="background: #ed8936;"></div>
+                                        <span>Consumables</span>
+                                    </div>
+                                    <span>$4.0K</span>
+                                </div>
+                                <div class="tooltip-row" data-category="others">
+                                    <div class="tooltip-label">
+                                        <div class="tooltip-color" style="background: #ecc94b;"></div>
+                                        <span>Others</span>
+                                    </div>
+                                    <span>$2.1K</span>
+                                </div>
+                            </div>
+                            <div class="bar-segment subcontractor" style="height: 32%;" data-category="subcontractor"><span class="segment-value">$9K</span></div>
+                            <div class="bar-segment mob-demob" style="height: 32%;" data-category="mob-demob"><span class="segment-value">$9K</span></div>
+                            <div class="bar-segment charter" style="height: 14%;" data-category="charter"><span class="segment-value">$4K</span></div>
+                            <div class="bar-segment consumables" style="height: 14%;" data-category="consumables"><span class="segment-value">$4K</span></div>
+                            <div class="bar-segment others" style="height: 8%;" data-category="others"><span class="segment-value">$2K</span></div>
+                        </div>
+                        <div class="bar-month-label">Sep 26</div>
+                    </div>
+                    <!-- October -->
+                    <div class="bar-wrapper">
+                        <div class="bar-stacked" style="height: 71%;" data-month="oct">
+                            <div class="bar-total-label">$29K</div>
+                            <div class="bar-tooltip">
+                                <div class="tooltip-row" data-category="subcontractor">
+                                    <div class="tooltip-label">
+                                        <div class="tooltip-color" style="background: #667eea;"></div>
+                                        <span>Subcontractor</span>
+                                    </div>
+                                    <span>$8.1K</span>
+                                </div>
+                                <div class="tooltip-row" data-category="mob-demob">
+                                    <div class="tooltip-label">
+                                        <div class="tooltip-color" style="background: #f093fb;"></div>
+                                        <span>Mob/Demob</span>
+                                    </div>
+                                    <span>$9.0K</span>
+                                </div>
+                                <div class="tooltip-row" data-category="charter">
+                                    <div class="tooltip-label">
+                                        <div class="tooltip-color" style="background: #48bb78;"></div>
+                                        <span>Charter</span>
+                                    </div>
+                                    <span>$4.1K</span>
+                                </div>
+                                <div class="tooltip-row" data-category="consumables">
+                                    <div class="tooltip-label">
+                                        <div class="tooltip-color" style="background: #ed8936;"></div>
+                                        <span>Consumables</span>
+                                    </div>
+                                    <span>$5.0K</span>
+                                </div>
+                                <div class="tooltip-row" data-category="others">
+                                    <div class="tooltip-label">
+                                        <div class="tooltip-color" style="background: #ecc94b;"></div>
+                                        <span>Others</span>
+                                    </div>
+                                    <span>$2.8K</span>
+                                </div>
+                            </div>
+                            <div class="bar-segment subcontractor" style="height: 28%;" data-category="subcontractor"><span class="segment-value">$8K</span></div>
+                            <div class="bar-segment mob-demob" style="height: 31%;" data-category="mob-demob"><span class="segment-value">$9K</span></div>
+                            <div class="bar-segment charter" style="height: 14%;" data-category="charter"><span class="segment-value">$4K</span></div>
+                            <div class="bar-segment consumables" style="height: 17%;" data-category="consumables"><span class="segment-value">$5K</span></div>
+                            <div class="bar-segment others" style="height: 10%;" data-category="others"><span class="segment-value">$3K</span></div>
+                        </div>
+                        <div class="bar-month-label">Oct 26</div>
+                    </div>
+                    <!-- November -->
+                    <div class="bar-wrapper">
+                        <div class="bar-stacked" style="height: 69%;" data-month="nov">
+                            <div class="bar-total-label">$28K</div>
+                            <div class="bar-tooltip">
+                                <div class="tooltip-row" data-category="subcontractor">
+                                    <div class="tooltip-label">
+                                        <div class="tooltip-color" style="background: #667eea;"></div>
+                                        <span>Subcontractor</span>
+                                    </div>
+                                    <span>$9.0K</span>
+                                </div>
+                                <div class="tooltip-row" data-category="mob-demob">
+                                    <div class="tooltip-label">
+                                        <div class="tooltip-color" style="background: #f093fb;"></div>
+                                        <span>Mob/Demob</span>
+                                    </div>
+                                    <span>$9.0K</span>
+                                </div>
+                                <div class="tooltip-row" data-category="charter">
+                                    <div class="tooltip-label">
+                                        <div class="tooltip-color" style="background: #48bb78;"></div>
+                                        <span>Charter</span>
+                                    </div>
+                                    <span>$3.9K</span>
+                                </div>
+                                <div class="tooltip-row" data-category="consumables">
+                                    <div class="tooltip-label">
+                                        <div class="tooltip-color" style="background: #ed8936;"></div>
+                                        <span>Consumables</span>
+                                    </div>
+                                    <span>$4.0K</span>
+                                </div>
+                                <div class="tooltip-row" data-category="others">
+                                    <div class="tooltip-label">
+                                        <div class="tooltip-color" style="background: #ecc94b;"></div>
+                                        <span>Others</span>
+                                    </div>
+                                    <span>$2.1K</span>
+                                </div>
+                            </div>
+                            <div class="bar-segment subcontractor" style="height: 32%;" data-category="subcontractor"><span class="segment-value">$9K</span></div>
+                            <div class="bar-segment mob-demob" style="height: 32%;" data-category="mob-demob"><span class="segment-value">$9K</span></div>
+                            <div class="bar-segment charter" style="height: 14%;" data-category="charter"><span class="segment-value">$4K</span></div>
+                            <div class="bar-segment consumables" style="height: 14%;" data-category="consumables"><span class="segment-value">$4K</span></div>
+                            <div class="bar-segment others" style="height: 8%;" data-category="others"><span class="segment-value">$2K</span></div>
+                        </div>
+                        <div class="bar-month-label">Nov 26</div>
+                    </div>
+                    <!-- December -->
+                    <div class="bar-wrapper">
+                        <div class="bar-stacked" style="height: 72%;" data-month="dec">
+                            <div class="bar-total-label">$29K</div>
+                            <div class="bar-tooltip">
+                                <div class="tooltip-row" data-category="subcontractor">
+                                    <div class="tooltip-label">
+                                        <div class="tooltip-color" style="background: #667eea;"></div>
+                                        <span>Subcontractor</span>
+                                    </div>
+                                    <span>$8.1K</span>
+                                </div>
+                                <div class="tooltip-row" data-category="mob-demob">
+                                    <div class="tooltip-label">
+                                        <div class="tooltip-color" style="background: #f093fb;"></div>
+                                        <span>Mob/Demob</span>
+                                    </div>
+                                    <span>$9.9K</span>
+                                </div>
+                                <div class="tooltip-row" data-category="charter">
+                                    <div class="tooltip-label">
+                                        <div class="tooltip-color" style="background: #48bb78;"></div>
+                                        <span>Charter</span>
+                                    </div>
+                                    <span>$4.9K</span>
+                                </div>
+                                <div class="tooltip-row" data-category="consumables">
+                                    <div class="tooltip-label">
+                                        <div class="tooltip-color" style="background: #ed8936;"></div>
+                                        <span>Consumables</span>
+                                    </div>
+                                    <span>$4.0K</span>
+                                </div>
+                                <div class="tooltip-row" data-category="others">
+                                    <div class="tooltip-label">
+                                        <div class="tooltip-color" style="background: #ecc94b;"></div>
+                                        <span>Others</span>
+                                    </div>
+                                    <span>$2.1K</span>
+                                </div>
+                            </div>
+                            <div class="bar-segment subcontractor" style="height: 28%;" data-category="subcontractor"><span class="segment-value">$8K</span></div>
+                            <div class="bar-segment mob-demob" style="height: 34%;" data-category="mob-demob"><span class="segment-value">$10K</span></div>
+                            <div class="bar-segment charter" style="height: 17%;" data-category="charter"><span class="segment-value">$5K</span></div>
+                            <div class="bar-segment consumables" style="height: 14%;" data-category="consumables"><span class="segment-value">$4K</span></div>
+                            <div class="bar-segment others" style="height: 7%;" data-category="others"><span class="segment-value">$2K</span></div>
+                        </div>
+                        <div class="bar-month-label">Dec 26</div>
+                    </div>
+                </div>
+                <!-- Bar Chart Legend -->
+                <div class="bar-legend">
+                    <div class="bar-legend-item">
+                        <div class="bar-legend-color" style="background: linear-gradient(135deg, #667eea 0%, #5568d3 100%);"></div>
+                        <span>Subcontractor</span>
+                    </div>
+                    <div class="bar-legend-item">
+                        <div class="bar-legend-color" style="background: linear-gradient(135deg, #f093fb 0%, #d97ce4 100%);"></div>
+                        <span>Mob/Demob</span>
+                    </div>
+                    <div class="bar-legend-item">
+                        <div class="bar-legend-color" style="background: linear-gradient(135deg, #48bb78 0%, #3ba565 100%);"></div>
+                        <span>Charter Hire</span>
+                    </div>
+                    <div class="bar-legend-item">
+                        <div class="bar-legend-color" style="background: linear-gradient(135deg, #ed8936 0%, #d67228 100%);"></div>
+                        <span>Consumables</span>
+                    </div>
+                    <div class="bar-legend-item">
+                        <div class="bar-legend-color" style="background: linear-gradient(135deg, #ecc94b 0%, #d4b33f 100%);"></div>
+                        <span>Others</span>
+                    </div>
+                </div>
+            </div>
+            <!-- Summary Cards -->
+            <div class="summary-section">
+                <div class="summary-card">
+                    <h3>Total Budget (BAC)</h3>
+                    <div class="summary-value">
+                        <span class="summary-icon">💰</span>
+                        <span>$332,000</span>
+                    </div>
+                </div>
+                <div class="summary-card expense">
+                    <h3>Actual to Date</h3>
+                    <div class="summary-value" style="color: #f5576c;">
+                        <span class="summary-icon">💸</span>
+                        <span>$50,000</span>
+                    </div>
+                </div>
+                <div class="summary-card revenue">
+                    <h3>Remaining Budget</h3>
+                    <div class="summary-value" style="color: #48bb78;">
+                        <span class="summary-icon">✅</span>
+                        <span>$282,000</span>
+                    </div>
+                </div>
+                <div class="summary-card">
+                    <h3>ETC (Estimate to Complete)</h3>
+                    <div class="summary-value">
+                        <span class="summary-icon">📊</span>
+                        <span>$162,000</span>
+                    </div>
+                </div>
+                <div class="summary-card warning">
+                    <h3>EAC (Estimate at Completion)</h3>
+                    <div class="summary-value" style="color: #ed8936;">
+                        <span class="summary-icon">📈</span>
+                        <span>$312,000</span>
+                    </div>
+                </div>
+                <div class="summary-card revenue">
+                    <h3>Forecast Variance</h3>
+                    <div class="summary-value" style="color: #48bb78;">
+                        <span class="summary-icon">🎯</span>
+                        <span>+$20,000</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- Expenses Detail View -->
+        <div class="content-view" id="expensesView">
+            <div class="forecast-grid">
+                <h2 class="grid-title">💰 Expenses Forecast Grid</h2>
+                <div class="table-container">
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>Account Code</th>
+                                <th>CBS Group</th>
+                                <th>BAC Budget</th>
+                                <th>Actual to Date</th>
+                                <th>BTC Remain</th>
+                                <th>ETC</th>
+                                <th>EAC</th>
+                                <th>Remain Forecast</th>
+                                <th>Start Month</th>
+                                <th>End Month</th>
+                                <th>Jan-26</th>
+                                <th>Feb-26</th>
+                                <th>Mar-26</th>
+                                <th>Apr-26</th>
+                                <th>May-26</th>
+                                <th>Jun-26</th>
+                                <th>Jul-26</th>
+                                <th>Aug-26</th>
+                                <th>Sep-26</th>
+                                <th>Oct-26</th>
+                                <th>Nov-26</th>
+                                <th>Dec-26</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td><strong>54001100</strong></td>
+                                <td><strong>Subcontractor</strong></td>
+                                <td class="amount">$100,000</td>
+                                <td class="amount">$30,000</td>
+                                <td class="amount">$70,000</td>
+                                <td class="amount">$20,000</td>
+                                <td class="amount">$100,000</td>
+                                <td class="amount">$50,000</td>
+                                <td>Jan-26</td>
+                                <td>Dec-26</td>
+                                <td class="month-col">$8.0K</td>
+                                <td class="month-col">$8.1K</td>
+                                <td class="month-col">$8.1K</td>
+                                <td class="month-col">$9.0K</td>
+                                <td class="month-col">$8.1K</td>
+                                <td class="month-col">$9.0K</td>
+                                <td class="month-col">$8.1K</td>
+                                <td class="month-col">$8.1K</td>
+                                <td class="month-col">$9.0K</td>
+                                <td class="month-col">$8.1K</td>
+                                <td class="month-col">$9.0K</td>
+                                <td class="month-col">$8.1K</td>
+                            </tr>
+                            <tr>
+                                <td><strong>54001200</strong></td>
+                                <td><strong>Mob / Demobilisation</strong></td>
+                                <td class="amount">$100,000</td>
+                                <td class="amount">$30,000</td>
+                                <td class="amount">$70,000</td>
+                                <td class="amount">$30,000</td>
+                                <td class="amount negative">$110,000</td>
+                                <td class="amount">$80,000</td>
+                                <td>Jan-26</td>
+                                <td>Dec-26</td>
+                                <td class="month-col">$9.0K</td>
+                                <td class="month-col">$9.0K</td>
+                                <td class="month-col">$9.9K</td>
+                                <td class="month-col">$9.0K</td>
+                                <td class="month-col">$9.0K</td>
+                                <td class="month-col">$9.9K</td>
+                                <td class="month-col">$9.0K</td>
+                                <td class="month-col">$9.0K</td>
+                                <td class="month-col">$9.0K</td>
+                                <td class="month-col">$9.0K</td>
+                                <td class="month-col">$9.0K</td>
+                                <td class="month-col">$9.9K</td>
+                            </tr>
+                            <tr>
+                                <td><strong>54001300</strong></td>
+                                <td><strong>Charter Hire</strong></td>
+                                <td class="amount">$50,000</td>
+                                <td class="amount">$0</td>
+                                <td class="amount">$50,000</td>
+                                <td class="amount">$50,000</td>
+                                <td class="amount">$50,000</td>
+                                <td class="amount">$50,000</td>
+                                <td>-</td>
+                                <td>-</td>
+                                <td class="month-col">$4.0K</td>
+                                <td class="month-col">$3.9K</td>
+                                <td class="month-col">$4.1K</td>
+                                <td class="month-col">$3.9K</td>
+                                <td class="month-col">$3.9K</td>
+                                <td class="month-col">$5.1K</td>
+                                <td class="month-col">$3.9K</td>
+                                <td class="month-col">$3.9K</td>
+                                <td class="month-col">$3.9K</td>
+                                <td class="month-col">$4.1K</td>
+                                <td class="month-col">$3.9K</td>
+                                <td class="month-col">$4.9K</td>
+                            </tr>
+                            <tr>
+                                <td><strong>54001400</strong></td>
+                                <td><strong>Consumables (Owned Cost)</strong></td>
+                                <td class="amount">$50,000</td>
+                                <td class="amount">$0</td>
+                                <td class="amount">$50,000</td>
+                                <td class="amount">$50,000</td>
+                                <td class="amount">$50,000</td>
+                                <td class="amount">$50,000</td>
+                                <td>-</td>
+                                <td>-</td>
+                                <td class="month-col">$4.0K</td>
+                                <td class="month-col">$4.0K</td>
+                                <td class="month-col">$4.0K</td>
+                                <td class="month-col">$4.0K</td>
+                                <td class="month-col">$4.0K</td>
+                                <td class="month-col">$5.0K</td>
+                                <td class="month-col">$4.0K</td>
+                                <td class="month-col">$4.0K</td>
+                                <td class="month-col">$4.0K</td>
+                                <td class="month-col">$5.0K</td>
+                                <td class="month-col">$4.0K</td>
+                                <td class="month-col">$4.0K</td>
+                            </tr>
+                            <tr>
+                                <td><strong>Others</strong></td>
+                                <td><strong>Other Costs Combined</strong></td>
+                                <td class="amount">$32,000</td>
+                                <td class="amount">$0</td>
+                                <td class="amount">$32,000</td>
+                                <td class="amount">$32,000</td>
+                                <td class="amount">$32,000</td>
+                                <td class="amount">$32,000</td>
+                                <td>-</td>
+                                <td>-</td>
+                                <td class="month-col">$3.0K</td>
+                                <td class="month-col">$3.0K</td>
+                                <td class="month-col">$2.9K</td>
+                                <td class="month-col">$2.1K</td>
+                                <td class="month-col">$3.0K</td>
+                                <td class="month-col">$1.0K</td>
+                                <td class="month-col">$3.0K</td>
+                                <td class="month-col">$3.0K</td>
+                                <td class="month-col">$2.1K</td>
+                                <td class="month-col">$2.8K</td>
+                                <td class="month-col">$2.1K</td>
+                                <td class="month-col">$2.1K</td>
+                            </tr>
+                            <tr>
+                                <td><strong>-</strong></td>
+                                <td><strong>Adjustment</strong></td>
+                                <td class="amount">$0</td>
+                                <td class="amount negative">($10,000)</td>
+                                <td class="amount">$0</td>
+                                <td class="amount">$0</td>
+                                <td class="amount negative">($10,000)</td>
+                                <td class="amount">$0</td>
+                                <td>-</td>
+                                <td>-</td>
+                                <td class="month-col">-</td>
+                                <td class="month-col">-</td>
+                                <td class="month-col">-</td>
+                                <td class="month-col">-</td>
+                                <td class="month-col">-</td>
+                                <td class="month-col">-</td>
+                                <td class="month-col">-</td>
+                                <td class="month-col">-</td>
+                                <td class="month-col">-</td>
+                                <td class="month-col">-</td>
+                                <td class="month-col">-</td>
+                                <td class="month-col">-</td>
+                            </tr>
+                            <tr class="highlight-row">
+                                <td colspan="2"><strong>Grand Total Project Expenses</strong></td>
+                                <td class="amount">$332,000</td>
+                                <td class="amount">$50,000</td>
+                                <td class="amount">$272,000</td>
+                                <td class="amount">$162,000</td>
+                                <td class="amount">$312,000</td>
+                                <td class="amount">$262,000</td>
+                                <td>-</td>
+                                <td>-</td>
+                                <td class="month-col"><strong>$28.0K</strong></td>
+                                <td class="month-col"><strong>$28.0K</strong></td>
+                                <td class="month-col"><strong>$29.0K</strong></td>
+                                <td class="month-col"><strong>$28.0K</strong></td>
+                                <td class="month-col"><strong>$28.0K</strong></td>
+                                <td class="month-col"><strong>$30.0K</strong></td>
+                                <td class="month-col"><strong>$28.0K</strong></td>
+                                <td class="month-col"><strong>$28.0K</strong></td>
+                                <td class="month-col"><strong>$28.0K</strong></td>
+                                <td class="month-col"><strong>$29.0K</strong></td>
+                                <td class="month-col"><strong>$28.0K</strong></td>
+                                <td class="month-col"><strong>$29.0K</strong></td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+        <!-- Revenue Detail View -->
+        <div class="content-view" id="revenueView">
+            <div class="forecast-grid">
+                <h2 class="grid-title">💵 Revenue Forecast Grid</h2>
+                <div class="table-container">
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>Account Code</th>
+                                <th>CBS Group</th>
+                                <th>Budget</th>
+                                <th>Actual to Date</th>
+                                <th>Remain</th>
+                                <th>Curve Type</th>
+                                <th>Start Month</th>
+                                <th>Remain Forecast</th>
+                                <th>End Month</th>
+                                <th>Owner</th>
+                                <th>Jan-26</th>
+                                <th>Feb-26</th>
+                                <th>Mar-26</th>
+                                <th>Apr-26</th>
+                                <th>May-26</th>
+                                <th>Jun-26</th>
+                                <th>Jul-26</th>
+                                <th>Aug-26</th>
+                                <th>Sep-26</th>
+                                <th>Oct-26</th>
+                                <th>Nov-26</th>
+                                <th>Dec-26</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td><strong>42001100</strong></td>
+                                <td><strong>Service Income - External</strong></td>
+                                <td class="amount">$300,000</td>
+                                <td class="amount positive">$100,000</td>
+                                <td class="amount">$200,000</td>
+                                <td>Linear</td>
+                                <td>Jan-26</td>
+                                <td class="amount">-</td>
+                                <td>Dec-26</td>
+                                <td>ABC</td>
+                                <td class="month-col">$25K</td>
+                                <td class="month-col">$25K</td>
+                                <td class="month-col">$25K</td>
+                                <td class="month-col">$25K</td>
+                                <td class="month-col">$25K</td>
+                                <td class="month-col">$25K</td>
+                                <td class="month-col">$25K</td>
+                                <td class="month-col">$25K</td>
+                                <td class="month-col">$25K</td>
+                                <td class="month-col">$25K</td>
+                                <td class="month-col">$25K</td>
+                                <td class="month-col">$25K</td>
+                            </tr>
+                            <tr>
+                                <td><strong>49001300</strong></td>
+                                <td><strong>Service Income - Internal</strong></td>
+                                <td class="amount">$200,000</td>
+                                <td class="amount">$0</td>
+                                <td class="amount">$200,000</td>
+                                <td>Linear</td>
+                                <td>Jan-26</td>
+                                <td class="amount">-</td>
+                                <td>Dec-26</td>
+                                <td>ABC</td>
+                                <td class="month-col">$17K</td>
+                                <td class="month-col">$17K</td>
+                                <td class="month-col">$17K</td>
+                                <td class="month-col">$17K</td>
+                                <td class="month-col">$17K</td>
+                                <td class="month-col">$17K</td>
+                                <td class="month-col">$17K</td>
+                                <td class="month-col">$17K</td>
+                                <td class="month-col">$17K</td>
+                                <td class="month-col">$17K</td>
+                                <td class="month-col">$16K</td>
+                                <td class="month-col">$16K</td>
+                            </tr>
+                            <tr class="highlight-row">
+                                <td colspan="2"><strong>Grand Total Project Revenue</strong></td>
+                                <td class="amount">$500,000</td>
+                                <td class="amount positive">$100,000</td>
+                                <td class="amount">$400,000</td>
+                                <td>-</td>
+                                <td>-</td>
+                                <td class="amount">-</td>
+                                <td>-</td>
+                                <td>-</td>
+                                <td class="month-col"><strong>$42K</strong></td>
+                                <td class="month-col"><strong>$42K</strong></td>
+                                <td class="month-col"><strong>$42K</strong></td>
+                                <td class="month-col"><strong>$42K</strong></td>
+                                <td class="month-col"><strong>$42K</strong></td>
+                                <td class="month-col"><strong>$42K</strong></td>
+                                <td class="month-col"><strong>$42K</strong></td>
+                                <td class="month-col"><strong>$42K</strong></td>
+                                <td class="month-col"><strong>$42K</strong></td>
+                                <td class="month-col"><strong>$42K</strong></td>
+                                <td class="month-col"><strong>$41K</strong></td>
+                                <td class="month-col"><strong>$41K</strong></td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+    <script>
+        // Filter functionality
+        function toggleFilter(category) {
+            const checkbox = document.getElementById(`filter-${category}`);
+            const filterBox = document.querySelector(`.filter-checkbox[data-category="${category}"]`);
+            
+            // Update filter box visual
+            if (checkbox.checked) {
+                filterBox.classList.add('active');
+            } else {
+                filterBox.classList.remove('active');
+            }
+            
+            // Update bar segments
+            const segments = document.querySelectorAll(`.bar-segment[data-category="${category}"]`);
+            const tooltipRows = document.querySelectorAll(`.tooltip-row[data-category="${category}"]`);
+            
+            segments.forEach(segment => {
+                if (checkbox.checked) {
+                    segment.classList.remove('hidden');
+                } else {
+                    segment.classList.add('hidden');
+                }
+            });
+            
+            tooltipRows.forEach(row => {
+                if (checkbox.checked) {
+                    row.classList.remove('hidden');
+                } else {
+                    row.classList.add('hidden');
+                }
+            });
+            
+            updateBarTotals();
+        }
+        
+        function selectAllFilters() {
+            const checkboxes = document.querySelectorAll('.filter-checkbox input[type="checkbox"]');
+            checkboxes.forEach(checkbox => {
+                checkbox.checked = true;
+                const category = checkbox.id.replace('filter-', '');
+                const filterBox = document.querySelector(`.filter-checkbox[data-category="${category}"]`);
+                filterBox.classList.add('active');
+            });
+            
+            document.querySelectorAll('.bar-segment').forEach(segment => {
+                segment.classList.remove('hidden');
+            });
+            
+            document.querySelectorAll('.tooltip-row').forEach(row => {
+                row.classList.remove('hidden');
+            });
+            
+            updateBarTotals();
+        }
+        
+        function clearAllFilters() {
+            const checkboxes = document.querySelectorAll('.filter-checkbox input[type="checkbox"]');
+            checkboxes.forEach(checkbox => {
+                checkbox.checked = false;
+                const category = checkbox.id.replace('filter-', '');
+                const filterBox = document.querySelector(`.filter-checkbox[data-category="${category}"]`);
+                filterBox.classList.remove('active');
+            });
+            
+            document.querySelectorAll('.bar-segment').forEach(segment => {
+                segment.classList.add('hidden');
+            });
+            
+            document.querySelectorAll('.tooltip-row').forEach(row => {
+                row.classList.add('hidden');
+            });
+            
+            updateBarTotals();
+        }
+        
+        function updateBarTotals() {
+            // This would recalculate and update the total labels
+            // For demo purposes, we keep them static
+        }
+        
+        function switchView(viewType) {
+            document.querySelectorAll('.content-view').forEach(view => {
+                view.classList.remove('active');
+            });
+            document.querySelectorAll('.view-btn').forEach(btn => {
+                btn.classList.remove('active');
+            });
+            if (viewType === 'overview') {
+                document.getElementById('overviewView').classList.add('active');
+                document.querySelectorAll('.view-btn')[0].classList.add('active');
+            } else if (viewType === 'expenses') {
+                document.getElementById('expensesView').classList.add('active');
+                document.querySelectorAll('.view-btn')[1].classList.add('active');
+            } else if (viewType === 'revenue') {
+                document.getElementById('revenueView').classList.add('active');
+                document.querySelectorAll('.view-btn')[2].classList.add('active');
+            }
+        }
+        
+        window.addEventListener('load', function() {
+            const barStacks = document.querySelectorAll('.bar-stacked');
+            barStacks.forEach((bar, index) => {
+                const height = bar.style.height;
+                bar.style.height = '0%';
+                setTimeout(() => {
+                    bar.style.height = height;
+                }, index * 80);
+            });
+        });
+        
+        let resizeTimer;
+        window.addEventListener('resize', function() {
+            clearTimeout(resizeTimer);
+            resizeTimer = setTimeout(function() {
+                console.log('Window resized - layout adjusted');
+            }, 250);
+        });
+    </script>
+</body>
+</html>
+
+							<script>
+                            	
+							</script>
+                        </body>
+                        </html>
+                    
