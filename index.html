@@ -76,11 +76,11 @@
             padding: 5px 0;
         }
         .evm-card {
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            background: linear-gradient(135deg, #4299e1 0%, #3182ce 100%);
             color: white;
             padding: 20px 25px;
             border-radius: 12px;
-            box-shadow: 0 10px 25px rgba(102, 126, 234, 0.3);
+            box-shadow: 0 10px 25px rgba(66, 153, 225, 0.3);
             transition: transform 0.3s ease;
             flex: 1;
             min-width: 180px;
@@ -88,21 +88,6 @@
         }
         .evm-card:hover {
             transform: translateY(-5px);
-        }
-        .evm-card.pv {
-            background: linear-gradient(135deg, #4299e1 0%, #3182ce 100%);
-        }
-        .evm-card.ev {
-            background: linear-gradient(135deg, #48bb78 0%, #38a169 100%);
-        }
-        .evm-card.ac {
-            background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);
-        }
-        .evm-card.cpi {
-            background: linear-gradient(135deg, #ecc94b 0%, #d69e2e 100%);
-        }
-        .evm-card.variance {
-            background: linear-gradient(135deg, #48bb78 0%, #38a169 100%);
         }
         .evm-label {
             font-size: 11px;
@@ -282,6 +267,33 @@
             border-radius: 8px;
             padding: 20px;
             gap: 8px;
+            position: relative;
+        }
+        /* Current divider line between Apr and May */
+        .bar-chart::before {
+            content: '';
+            position: absolute;
+            left: 41.5%;
+            top: 10px;
+            bottom: 30px;
+            width: 2px;
+            background: #cbd5e0;
+            border-left: 2px dashed #cbd5e0;
+            z-index: 1;
+        }
+        .bar-chart::after {
+            content: 'Current';
+            position: absolute;
+            left: 41.5%;
+            top: -5px;
+            transform: translateX(-50%);
+            background: #fed7d7;
+            color: #c53030;
+            padding: 3px 10px;
+            border-radius: 4px;
+            font-size: 9px;
+            font-weight: 700;
+            z-index: 2;
         }
         .bar-wrapper {
             flex: 1;
@@ -290,6 +302,7 @@
             align-items: center;
             max-width: 70px;
             position: relative;
+            z-index: 2;
         }
         .bar-stacked {
             width: 100%;
@@ -555,6 +568,48 @@
             box-shadow: 0 0 0 3px rgba(102, 126, 234, 0.1);
         }
         
+        /* Action buttons section */
+        .table-actions {
+            display: flex;
+            justify-content: flex-end;
+            gap: 15px;
+            margin-top: 20px;
+            padding: 20px;
+            background: white;
+            border-radius: 8px;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.05);
+        }
+        .action-btn {
+            padding: 12px 30px;
+            border: none;
+            border-radius: 8px;
+            font-size: 14px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+        .action-btn.submit {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            box-shadow: 0 4px 12px rgba(102, 126, 234, 0.3);
+        }
+        .action-btn.submit:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 16px rgba(102, 126, 234, 0.4);
+        }
+        .action-btn.approval {
+            background: linear-gradient(135deg, #48bb78 0%, #38a169 100%);
+            color: white;
+            box-shadow: 0 4px 12px rgba(72, 187, 120, 0.3);
+        }
+        .action-btn.approval:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 16px rgba(72, 187, 120, 0.4);
+        }
+        
         .summary-section {
             display: grid;
             grid-template-columns: repeat(3, 1fr);
@@ -715,23 +770,23 @@
             </div>
         </div>
         <div class="evm-section">
-            <div class="evm-card pv">
+            <div class="evm-card">
                 <div class="evm-label">PV (Planned Value)</div>
                 <div class="evm-value">$XXX</div>
             </div>
-            <div class="evm-card ev">
+            <div class="evm-card">
                 <div class="evm-label">EV (Earned Value)</div>
                 <div class="evm-value">$XXX</div>
             </div>
-            <div class="evm-card ac">
+            <div class="evm-card">
                 <div class="evm-label">AC (Actual Cost)</div>
                 <div class="evm-value">$XXX</div>
             </div>
-            <div class="evm-card cpi">
+            <div class="evm-card">
                 <div class="evm-label">CPI (Cost Performance)</div>
                 <div class="evm-value">1.XX</div>
             </div>
-            <div class="evm-card variance">
+            <div class="evm-card">
                 <div class="evm-label">EAC Variance</div>
                 <div class="evm-value">$20,000</div>
             </div>
@@ -1537,7 +1592,7 @@
                                 <th>End Month</th>
                                 <th>Curve Type</th>
                                 <th>Last Update</th>
-                                <th>Owner</th>
+                                <th>PM</th>
                                 <th class="month-header">Jan-26</th>
                                 <th class="month-header">Feb-26</th>
                                 <th class="month-header">Mar-26</th>
@@ -1576,6 +1631,7 @@
                                         <option value="Front Loaded">Front Loaded</option>
                                         <option value="Back Loaded">Back Loaded</option>
                                         <option value="Bell Shaped">Bell Shaped</option>
+                                        <option value="Trapezoider">Trapezoider</option>
                                         <option value="Manual">Manual</option>
                                     </select>
                                 </td>
@@ -1617,6 +1673,7 @@
                                         <option value="Front Loaded">Front Loaded</option>
                                         <option value="Back Loaded">Back Loaded</option>
                                         <option value="Bell Shaped">Bell Shaped</option>
+                                        <option value="Trapezoider">Trapezoider</option>
                                         <option value="Manual">Manual</option>
                                     </select>
                                 </td>
@@ -1658,6 +1715,7 @@
                                         <option value="Front Loaded">Front Loaded</option>
                                         <option value="Back Loaded">Back Loaded</option>
                                         <option value="Bell Shaped">Bell Shaped</option>
+                                        <option value="Trapezoider">Trapezoider</option>
                                         <option value="Manual" selected>Manual</option>
                                     </select>
                                 </td>
@@ -1699,6 +1757,7 @@
                                         <option value="Front Loaded">Front Loaded</option>
                                         <option value="Back Loaded">Back Loaded</option>
                                         <option value="Bell Shaped">Bell Shaped</option>
+                                        <option value="Trapezoider">Trapezoider</option>
                                         <option value="Manual" selected>Manual</option>
                                     </select>
                                 </td>
@@ -1740,6 +1799,7 @@
                                         <option value="Front Loaded">Front Loaded</option>
                                         <option value="Back Loaded">Back Loaded</option>
                                         <option value="Bell Shaped">Bell Shaped</option>
+                                        <option value="Trapezoider">Trapezoider</option>
                                         <option value="Manual">Manual</option>
                                     </select>
                                 </td>
@@ -1781,6 +1841,7 @@
                                         <option value="Front Loaded">Front Loaded</option>
                                         <option value="Back Loaded">Back Loaded</option>
                                         <option value="Bell Shaped">Bell Shaped</option>
+                                        <option value="Trapezoider">Trapezoider</option>
                                         <option value="Manual">Manual</option>
                                     </select>
                                 </td>
@@ -1822,6 +1883,7 @@
                                         <option value="Front Loaded">Front Loaded</option>
                                         <option value="Back Loaded">Back Loaded</option>
                                         <option value="Bell Shaped">Bell Shaped</option>
+                                        <option value="Trapezoider">Trapezoider</option>
                                         <option value="Manual">Manual</option>
                                     </select>
                                 </td>
@@ -1863,6 +1925,7 @@
                                         <option value="Front Loaded">Front Loaded</option>
                                         <option value="Back Loaded">Back Loaded</option>
                                         <option value="Bell Shaped">Bell Shaped</option>
+                                        <option value="Trapezoider">Trapezoider</option>
                                         <option value="Manual">Manual</option>
                                     </select>
                                 </td>
@@ -1904,6 +1967,7 @@
                                         <option value="Front Loaded">Front Loaded</option>
                                         <option value="Back Loaded">Back Loaded</option>
                                         <option value="Bell Shaped">Bell Shaped</option>
+                                        <option value="Trapezoider">Trapezoider</option>
                                         <option value="Manual">Manual</option>
                                     </select>
                                 </td>
@@ -1945,6 +2009,7 @@
                                         <option value="Front Loaded">Front Loaded</option>
                                         <option value="Back Loaded">Back Loaded</option>
                                         <option value="Bell Shaped">Bell Shaped</option>
+                                        <option value="Trapezoider">Trapezoider</option>
                                         <option value="Manual">Manual</option>
                                     </select>
                                 </td>
@@ -1986,6 +2051,7 @@
                                         <option value="Front Loaded">Front Loaded</option>
                                         <option value="Back Loaded">Back Loaded</option>
                                         <option value="Bell Shaped">Bell Shaped</option>
+                                        <option value="Trapezoider">Trapezoider</option>
                                         <option value="Manual">Manual</option>
                                     </select>
                                 </td>
@@ -2027,6 +2093,7 @@
                                         <option value="Front Loaded">Front Loaded</option>
                                         <option value="Back Loaded">Back Loaded</option>
                                         <option value="Bell Shaped">Bell Shaped</option>
+                                        <option value="Trapezoider">Trapezoider</option>
                                         <option value="Manual">Manual</option>
                                     </select>
                                 </td>
@@ -2068,6 +2135,7 @@
                                         <option value="Front Loaded">Front Loaded</option>
                                         <option value="Back Loaded">Back Loaded</option>
                                         <option value="Bell Shaped">Bell Shaped</option>
+                                        <option value="Trapezoider">Trapezoider</option>
                                         <option value="Manual">Manual</option>
                                     </select>
                                 </td>
@@ -2109,6 +2177,7 @@
                                         <option value="Front Loaded">Front Loaded</option>
                                         <option value="Back Loaded">Back Loaded</option>
                                         <option value="Bell Shaped">Bell Shaped</option>
+                                        <option value="Trapezoider">Trapezoider</option>
                                         <option value="Manual">Manual</option>
                                     </select>
                                 </td>
@@ -2150,6 +2219,7 @@
                                         <option value="Front Loaded">Front Loaded</option>
                                         <option value="Back Loaded">Back Loaded</option>
                                         <option value="Bell Shaped">Bell Shaped</option>
+                                        <option value="Trapezoider">Trapezoider</option>
                                         <option value="Manual">Manual</option>
                                     </select>
                                 </td>
@@ -2191,6 +2261,7 @@
                                         <option value="Front Loaded">Front Loaded</option>
                                         <option value="Back Loaded">Back Loaded</option>
                                         <option value="Bell Shaped">Bell Shaped</option>
+                                        <option value="Trapezoider">Trapezoider</option>
                                         <option value="Manual">Manual</option>
                                     </select>
                                 </td>
@@ -2232,6 +2303,7 @@
                                         <option value="Front Loaded">Front Loaded</option>
                                         <option value="Back Loaded">Back Loaded</option>
                                         <option value="Bell Shaped">Bell Shaped</option>
+                                        <option value="Trapezoider">Trapezoider</option>
                                         <option value="Manual">Manual</option>
                                     </select>
                                 </td>
@@ -2273,6 +2345,7 @@
                                         <option value="Front Loaded">Front Loaded</option>
                                         <option value="Back Loaded">Back Loaded</option>
                                         <option value="Bell Shaped">Bell Shaped</option>
+                                        <option value="Trapezoider">Trapezoider</option>
                                         <option value="Manual">Manual</option>
                                     </select>
                                 </td>
@@ -2314,6 +2387,7 @@
                                         <option value="Front Loaded">Front Loaded</option>
                                         <option value="Back Loaded">Back Loaded</option>
                                         <option value="Bell Shaped">Bell Shaped</option>
+                                        <option value="Trapezoider">Trapezoider</option>
                                         <option value="Manual">Manual</option>
                                     </select>
                                 </td>
@@ -2356,6 +2430,10 @@
                         </tbody>
                     </table>
                 </div>
+                <div class="table-actions">
+                    <button class="action-btn submit" onclick="submitExpenses()">📝 Submit</button>
+                    <button class="action-btn approval" onclick="approveExpenses()">✅ Approval</button>
+                </div>
             </div>
         </div>
         <div class="content-view" id="revenueView">
@@ -2375,7 +2453,7 @@
                                 <th>End Month</th>
                                 <th>Curve Type</th>
                                 <th>Last Update</th>
-                                <th>Owner</th>
+                                <th>PM</th>
                                 <th class="month-header">Jan '26</th>
                                 <th class="month-header">Feb '26</th>
                                 <th class="month-header">Mar '26</th>
@@ -2400,6 +2478,7 @@
                                         <option value="Front Loaded">Front Loaded</option>
                                         <option value="Back Loaded">Back Loaded</option>
                                         <option value="Bell Shaped">Bell Shaped</option>
+                                        <option value="Trapezoider">Trapezoider</option>
                                         <option value="Manual">Manual</option>
                                     </select>
                                 </td>
@@ -2427,6 +2506,7 @@
                                         <option value="Front Loaded">Front Loaded</option>
                                         <option value="Back Loaded">Back Loaded</option>
                                         <option value="Bell Shaped">Bell Shaped</option>
+                                        <option value="Trapezoider">Trapezoider</option>
                                         <option value="Manual" selected>Manual</option>
                                     </select>
                                 </td>
@@ -2454,6 +2534,7 @@
                                         <option value="Front Loaded">Front Loaded</option>
                                         <option value="Back Loaded">Back Loaded</option>
                                         <option value="Bell Shaped">Bell Shaped</option>
+                                        <option value="Trapezoider">Trapezoider</option>
                                         <option value="Manual" selected>Manual</option>
                                     </select>
                                 </td>
@@ -2481,6 +2562,7 @@
                                         <option value="Front Loaded">Front Loaded</option>
                                         <option value="Back Loaded">Back Loaded</option>
                                         <option value="Bell Shaped">Bell Shaped</option>
+                                        <option value="Trapezoider">Trapezoider</option>
                                         <option value="Manual" selected>Manual</option>
                                     </select>
                                 </td>
@@ -2508,6 +2590,7 @@
                                         <option value="Front Loaded">Front Loaded</option>
                                         <option value="Back Loaded">Back Loaded</option>
                                         <option value="Bell Shaped">Bell Shaped</option>
+                                        <option value="Trapezoider">Trapezoider</option>
                                         <option value="Manual" selected>Manual</option>
                                     </select>
                                 </td>
@@ -2535,6 +2618,7 @@
                                         <option value="Front Loaded">Front Loaded</option>
                                         <option value="Back Loaded">Back Loaded</option>
                                         <option value="Bell Shaped">Bell Shaped</option>
+                                        <option value="Trapezoider">Trapezoider</option>
                                         <option value="Manual" selected>Manual</option>
                                     </select>
                                 </td>
@@ -2562,6 +2646,7 @@
                                         <option value="Front Loaded">Front Loaded</option>
                                         <option value="Back Loaded">Back Loaded</option>
                                         <option value="Bell Shaped">Bell Shaped</option>
+                                        <option value="Trapezoider">Trapezoider</option>
                                         <option value="Manual" selected>Manual</option>
                                     </select>
                                 </td>
@@ -2589,6 +2674,7 @@
                                         <option value="Front Loaded">Front Loaded</option>
                                         <option value="Back Loaded">Back Loaded</option>
                                         <option value="Bell Shaped">Bell Shaped</option>
+                                        <option value="Trapezoider">Trapezoider</option>
                                         <option value="Manual" selected>Manual</option>
                                     </select>
                                 </td>
@@ -2616,6 +2702,7 @@
                                         <option value="Front Loaded">Front Loaded</option>
                                         <option value="Back Loaded">Back Loaded</option>
                                         <option value="Bell Shaped">Bell Shaped</option>
+                                        <option value="Trapezoider">Trapezoider</option>
                                         <option value="Manual" selected>Manual</option>
                                     </select>
                                 </td>
@@ -2643,6 +2730,7 @@
                                         <option value="Front Loaded">Front Loaded</option>
                                         <option value="Back Loaded">Back Loaded</option>
                                         <option value="Bell Shaped">Bell Shaped</option>
+                                        <option value="Trapezoider">Trapezoider</option>
                                         <option value="Manual" selected>Manual</option>
                                     </select>
                                 </td>
@@ -2670,6 +2758,7 @@
                                         <option value="Front Loaded">Front Loaded</option>
                                         <option value="Back Loaded">Back Loaded</option>
                                         <option value="Bell Shaped">Bell Shaped</option>
+                                        <option value="Trapezoider">Trapezoider</option>
                                         <option value="Manual" selected>Manual</option>
                                     </select>
                                 </td>
@@ -2697,6 +2786,7 @@
                                         <option value="Front Loaded">Front Loaded</option>
                                         <option value="Back Loaded">Back Loaded</option>
                                         <option value="Bell Shaped">Bell Shaped</option>
+                                        <option value="Trapezoider">Trapezoider</option>
                                         <option value="Manual" selected>Manual</option>
                                     </select>
                                 </td>
@@ -2724,6 +2814,7 @@
                                         <option value="Front Loaded">Front Loaded</option>
                                         <option value="Back Loaded">Back Loaded</option>
                                         <option value="Bell Shaped">Bell Shaped</option>
+                                        <option value="Trapezoider">Trapezoider</option>
                                         <option value="Manual" selected>Manual</option>
                                     </select>
                                 </td>
@@ -2751,6 +2842,7 @@
                                         <option value="Front Loaded">Front Loaded</option>
                                         <option value="Back Loaded">Back Loaded</option>
                                         <option value="Bell Shaped">Bell Shaped</option>
+                                        <option value="Trapezoider">Trapezoider</option>
                                         <option value="Manual" selected>Manual</option>
                                     </select>
                                 </td>
@@ -2778,6 +2870,7 @@
                                         <option value="Front Loaded">Front Loaded</option>
                                         <option value="Back Loaded">Back Loaded</option>
                                         <option value="Bell Shaped">Bell Shaped</option>
+                                        <option value="Trapezoider">Trapezoider</option>
                                         <option value="Manual" selected>Manual</option>
                                     </select>
                                 </td>
@@ -2805,6 +2898,7 @@
                                         <option value="Front Loaded">Front Loaded</option>
                                         <option value="Back Loaded">Back Loaded</option>
                                         <option value="Bell Shaped">Bell Shaped</option>
+                                        <option value="Trapezoider">Trapezoider</option>
                                         <option value="Manual" selected>Manual</option>
                                     </select>
                                 </td>
@@ -2832,6 +2926,7 @@
                                         <option value="Front Loaded">Front Loaded</option>
                                         <option value="Back Loaded">Back Loaded</option>
                                         <option value="Bell Shaped">Bell Shaped</option>
+                                        <option value="Trapezoider">Trapezoider</option>
                                         <option value="Manual" selected>Manual</option>
                                     </select>
                                 </td>
@@ -2859,6 +2954,7 @@
                                         <option value="Front Loaded">Front Loaded</option>
                                         <option value="Back Loaded">Back Loaded</option>
                                         <option value="Bell Shaped">Bell Shaped</option>
+                                        <option value="Trapezoider">Trapezoider</option>
                                         <option value="Manual" selected>Manual</option>
                                     </select>
                                 </td>
@@ -2886,6 +2982,7 @@
                                         <option value="Front Loaded">Front Loaded</option>
                                         <option value="Back Loaded">Back Loaded</option>
                                         <option value="Bell Shaped">Bell Shaped</option>
+                                        <option value="Trapezoider">Trapezoider</option>
                                         <option value="Manual" selected>Manual</option>
                                     </select>
                                 </td>
@@ -2913,6 +3010,7 @@
                                         <option value="Front Loaded">Front Loaded</option>
                                         <option value="Back Loaded">Back Loaded</option>
                                         <option value="Bell Shaped">Bell Shaped</option>
+                                        <option value="Trapezoider">Trapezoider</option>
                                         <option value="Manual">Manual</option>
                                     </select>
                                 </td>
@@ -2927,6 +3025,10 @@
                             </tr>
                         </tbody>
                     </table>
+                </div>
+                <div class="table-actions">
+                    <button class="action-btn submit" onclick="submitRevenue()">📝 Submit</button>
+                    <button class="action-btn approval" onclick="approveRevenue()">✅ Approval</button>
                 </div>
             </div>
         </div>
@@ -3015,6 +3117,22 @@
                 document.getElementById('revenueView').classList.add('active');
                 document.querySelectorAll('.view-btn')[2].classList.add('active');
             }
+        }
+        
+        function submitExpenses() {
+            alert('✅ Expenses data submitted successfully!');
+        }
+        
+        function approveExpenses() {
+            alert('✅ Expenses data approved successfully!');
+        }
+        
+        function submitRevenue() {
+            alert('✅ Revenue data submitted successfully!');
+        }
+        
+        function approveRevenue() {
+            alert('✅ Revenue data approved successfully!');
         }
         
         window.addEventListener('load', function() {
